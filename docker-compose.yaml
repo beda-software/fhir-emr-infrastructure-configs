@@ -160,3 +160,8 @@ services:
     volumes:
       - /root/fhir-emr-master/zrc:/app/zrc
       - /root/fhir-emr-master/resources/seeds:/app/resources/seeds
+
+  web-rtc-server:
+    build: ../mediasoup-demo/server
+    ports:
+      - 4443:4443
