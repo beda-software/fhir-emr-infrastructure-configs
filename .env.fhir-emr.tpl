@@ -1,0 +1,37 @@
+APP_FAST_START_MODE=True
+
+AIDBOX_ZEN_PROJECT=/zrc
+AIDBOX_ZEN_ENTRYPOINT=box/box
+AIDBOX_ZEN_DEV_MODE=enable
+
+AIDBOX_CLIENT_ID=root
+AIDBOX_CLIENT_SECRET=secret
+AIDBOX_ADMIN_PASSWORD=password
+
+AIDBOX_BASE_URL=http://fhir-emr-aidbox:8080
+AIDBOX_PORT=8080
+AIDBOX_FHIR_VERSION=4.0.0
+
+PGHOST=fhir-emr-aidbox-db
+PGDATABASE=devbox
+PGPORT=5432
+PGUSER=postgres
+PGPASSWORD=postgres
+
+OPENID_RSA=/var/config/jwtRS256.key
+OPENID_RSA_PUB=/var/config/jwtRS256.key.pub
+
+# SDC
+APP_INIT_CLIENT_ID=root
+APP_INIT_CLIENT_SECRET=secret
+APP_INIT_URL=http://fhir-emr-aidbox:8080
+
+APP_ID=sdc
+APP_SECRET=secret
+APP_URL=http://fhir-emr-sdc:8081
+APP_PORT=8081
+AIO_PORT=8081
+AIO_HOST=0.0.0.0
+
+# APP
+FHIR_EMR_AUTH_URL="https://fhir-emr.beda.software/auth"
