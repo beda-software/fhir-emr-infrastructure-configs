@@ -1,5 +1,4 @@
 services:
-
   nginx:
     image: jonasal/nginx-certbot
     ports:
@@ -65,10 +64,12 @@ services:
       - .env.sdc-ide
     environment:
       AIDBOX_LICENSE: ${SDC_IDE_AIDBOX_LICENSE}
+      AIDBOX_ADMIN_PASSWORD: ${SDC_IDE_AIDBOX_ADMIN_PASSWORD}
     volumes:
       - ./config:/var/config:cached
 
   sdc-ide-aidbox-db:
+    # Update version
     image: healthsamurai/aidboxdb:13.2
     environment:
       POSTGRES_USER:     ${POSTGRES_USER}
@@ -129,11 +130,13 @@ services:
       - .env.fhir-emr
     environment:
       AIDBOX_LICENSE: ${FHIR_EMR_AIDBOX_LICENSE}
+      AIDBOX_ADMIN_PASSWORD: ${FHIR_EMR_AIDBOX_ADMIN_PASSWORD}
     volumes:
       - ./config:/var/config:cached
       - /root/fhir-emr-master/zrc:/zrc
 
   fhir-emr-aidbox-db:
+    # Update version
     image: healthsamurai/aidboxdb:13.2
     environment:
       POSTGRES_USER:     postgres
