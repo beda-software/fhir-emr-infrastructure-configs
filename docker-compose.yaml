@@ -156,6 +156,15 @@ services:
       timeout: 20s
       retries: 100
 
+  fhir-emr-scheduling:
+    image: bedasoftware/aidbox-scheduling-node-app
+    depends_on:
+      fhir-emr-aidbox-healthcheck:
+        condition: service_healthy
+    env_file:
+      - .env.scheduling
+      - .env.fhir-emr-scheduling
+
   build-seeds:
     build:
       context: /root/fhir-emr-master/.
