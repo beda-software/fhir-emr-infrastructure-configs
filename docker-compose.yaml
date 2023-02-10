@@ -70,7 +70,7 @@ services:
 
   sdc-ide-aidbox-db:
     # Update version
-    image: healthsamurai/aidboxdb:14.5
+    image: healthsamurai/aidboxdb:13.2
     environment:
       POSTGRES_USER:     ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -137,7 +137,7 @@ services:
 
   fhir-emr-aidbox-db:
     # Update version
-    image: healthsamurai/aidboxdb:14.5
+    image: healthsamurai/aidboxdb:13.2
     environment:
       POSTGRES_USER:     postgres
       POSTGRES_PASSWORD: postgres
