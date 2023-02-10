@@ -31,8 +31,8 @@ jobs:
           script_stop: true
           script: |
             cd ~/web
-            echo "SDC_IDE_AIDBOX_LICENSE=$SDC_IDE_AIDBOX_LICENSE >> .env2"
-            echo "FHIR_EMR_AIDBOX_LICENSE=$FHIR_EMR_AIDBOX_LICENSE >> .env2"
-            echo "CERTBOT_EMAIL=$CERTBOT_EMAIL >> .env2"
+            echo "SDC_IDE_AIDBOX_LICENSE=$SDC_IDE_AIDBOX_LICENSE" >> .env
+            echo "FHIR_EMR_AIDBOX_LICENSE=$FHIR_EMR_AIDBOX_LICENSE" >> .env
+            echo "CERTBOT_EMAIL=$CERTBOT_EMAIL" >> .env
             make restart
             echo Current branch is ${{ github.ref }}
