@@ -162,7 +162,7 @@ services:
       fhir-emr-aidbox-healthcheck:
         condition: service_healthy
     env_file:
-      - .env.scheduling
+      - .env.fhir-emr
       - .env.fhir-emr-scheduling
 
   build-seeds:
