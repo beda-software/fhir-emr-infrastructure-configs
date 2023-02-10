@@ -64,7 +64,7 @@ services:
       - .env.sdc-ide
     environment:
       AIDBOX_LICENSE: ${SDC_IDE_AIDBOX_LICENSE}
-      AIDBOX_ADMIN_PASSWORD: ${SDC_IDE_AIDBOX_ADMIN_PASSWORD}
+      AIDBOX_ADMIN_PASSWORD: ${SDC_IDE_AIDBOX_ADMIN_PASSWORD:-password}
     volumes:
       - ./config:/var/config:cached
 
@@ -130,7 +130,7 @@ services:
       - .env.fhir-emr
     environment:
       AIDBOX_LICENSE: ${FHIR_EMR_AIDBOX_LICENSE}
-      AIDBOX_ADMIN_PASSWORD: ${FHIR_EMR_AIDBOX_ADMIN_PASSWORD}
+      AIDBOX_ADMIN_PASSWORD: ${FHIR_EMR_AIDBOX_ADMIN_PASSWORD:-password}
     volumes:
       - ./config:/var/config:cached
       - /root/fhir-emr-master/zrc:/zrc
