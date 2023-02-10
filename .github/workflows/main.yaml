@@ -17,3 +17,19 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           source: "*,!.github,!.gitignore"
           target: "web"
+      - name: Generate .env and restart
+        uses: appleboy/ssh-action@v0.1.7
+        env:
+          SDC_IDE_AIDBOX_LICENSE: ${{secrets.SDC_IDE_AIDBOX_LICENSE}}
+          FHIR_EMR_AIDBOX_LICENSE: ${{secrets.FHIR_EMR_AIDBOX_LICENSE}}
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          envs: SDC_IDE_AIDBOX_LICENSE,FHIR_EMR_AIDBOX_LICENSE
+          script: |
+            cd ~/web
+            echo "SDC_IDE_AIDBOX_LICENSE=$SDC_IDE_AIDBOX_LICENSE >> .env"
+            echo "FHIR_EMR_AIDBOX_LICENSE=$FHIR_EMR_AIDBOX_LICENSE >> .env"
+            make restart
+            echo Current branch is ${{ github.ref }}
