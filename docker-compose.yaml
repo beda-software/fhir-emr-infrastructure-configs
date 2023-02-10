@@ -55,7 +55,7 @@ services:
     tty: true
 
   sdc-ide-aidbox:
-    image: healthsamurai/aidboxone:edge
+    image: healthsamurai/aidboxone:latest
     depends_on:
       - sdc-ide-aidbox-db
     links:
@@ -121,7 +121,7 @@ services:
     tty: true
 
   fhir-emr-aidbox:
-    image: healthsamurai/aidboxone:edge
+    image: healthsamurai/aidboxone:latest
     depends_on:
       - fhir-emr-aidbox-db
     links:
