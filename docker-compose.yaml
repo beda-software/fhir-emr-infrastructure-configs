@@ -72,9 +72,9 @@ services:
     # Update version
     image: healthsamurai/aidboxdb:13.2
     environment:
-      POSTGRES_USER:     ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB:       ${POSTGRES_DB}
+      POSTGRES_USER:     ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB:       ${POSTGRES_DB:-devbox}
 
   sdc-ide-aidbox-healthcheck:
     image: curlimages/curl
@@ -139,9 +139,9 @@ services:
     # Update version
     image: healthsamurai/aidboxdb:13.2
     environment:
-      POSTGRES_USER:     postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB:       devbox
+      POSTGRES_USER:     ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB:       ${POSTGRES_DB:-devbox}
 
   fhir-emr-aidbox-healthcheck:
     image: curlimages/curl
