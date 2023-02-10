@@ -15,5 +15,5 @@ jobs:
           host: ${{secrets.REMOTE_HOST}}
           username: ${{secrets.REMOTE_USER}}
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          source: "docker-compose.yaml"
+          source: "*,!.github,!.gitignore"
           target: "web"
