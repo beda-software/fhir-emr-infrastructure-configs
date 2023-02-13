@@ -1,0 +1,11 @@
+services:
+  fhir-emr-web-healthcheck:
+    extends:
+      file: ./healthchecker.yaml
+      service: healthchecker
+    links:
+      - fhir-emr-web
+    depends_on:
+      - fhir-emr-web
+    healthcheck:
+      test: curl --fail http://fhir-emr-web:5000 || exit 1

@@ -1,0 +1,13 @@
+services:
+  fhir-emr-sdc:
+    image: bedasoftware/aidbox-sdc:latest
+    depends_on:
+      fhir-emr-aidbox-healthcheck:
+        condition:
+          service_healthy
+    links:
+      - fhir-emr-aidbox
+    env_file:
+      - ../.env.fhir-emr
+    # Colored logs
+    tty: true

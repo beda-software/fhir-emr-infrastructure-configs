@@ -1,0 +1,15 @@
+services:
+  fhir-emr-aidbox:
+    image: healthsamurai/aidboxone:latest
+    depends_on:
+      - fhir-emr-aidbox-db
+    links:
+      - fhir-emr-aidbox-db:database
+    env_file:
+      - ../.env.fhir-emr
+    environment:
+      AIDBOX_LICENSE: ${FHIR_EMR_AIDBOX_LICENSE}
+      AIDBOX_ADMIN_PASSWORD: ${FHIR_EMR_AIDBOX_ADMIN_PASSWORD:-password}
+    volumes:
+      - ../config:/var/config:cached
+      - /root/fhir-emr-master/zrc:/zrc

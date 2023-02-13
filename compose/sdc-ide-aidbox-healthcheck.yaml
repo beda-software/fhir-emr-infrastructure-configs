@@ -1,0 +1,11 @@
+services:
+  sdc-ide-aidbox-healthcheck:
+    extends:
+      file: ./healthchecker.yaml
+      service: healthchecker
+    links:
+      - sdc-ide-aidbox
+    depends_on:
+      - sdc-ide-aidbox
+    healthcheck:
+      test: curl --fail http://sdc-ide-aidbox:8080/__healthcheck || exit 1

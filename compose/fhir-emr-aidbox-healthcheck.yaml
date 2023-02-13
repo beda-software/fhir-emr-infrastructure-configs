@@ -1,0 +1,11 @@
+services:
+  fhir-emr-aidbox-healthcheck:
+    extends:
+      file: ./healthchecker.yaml
+      service: healthchecker
+    links:
+      - fhir-emr-aidbox
+    depends_on:
+      - fhir-emr-aidbox
+    healthcheck:
+      test: curl --fail http://fhir-emr-aidbox:8080/__healthcheck || exit 1

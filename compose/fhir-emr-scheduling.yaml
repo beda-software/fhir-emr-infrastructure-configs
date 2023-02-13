@@ -1,0 +1,9 @@
+services:
+  fhir-emr-scheduling:
+    image: bedasoftware/aidbox-scheduling-node-app
+    depends_on:
+      fhir-emr-aidbox-healthcheck:
+        condition: service_healthy
+    env_file:
+      - ../.env.fhir-emr
+      - ../.env.fhir-emr-scheduling

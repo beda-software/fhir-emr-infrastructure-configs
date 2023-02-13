@@ -1,27 +1,8 @@
 services:
   nginx:
-    image: jonasal/nginx-certbot
-    ports:
-    - "80:80"
-    - "443:443"
-    volumes:
-    - ./nginx:/etc/nginx/user_conf.d:ro
-    - ./letsencrypt:/etc/letsencrypt
-    environment:
-      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
-    depends_on:
-      sdc-ide-aidbox-healthcheck:
-        condition:
-          service_healthy
-      sdc-ide-web-healthcheck:
-        condition:
-          service_healthy
-      fhir-emr-aidbox-healthcheck:
-        condition:
-          service_healthy
-      fhir-emr-web-healthcheck:
-        condition:
-          service_healthy
+    extends:
+      file: ./compose/nginx.yaml
+      service: nginx
 
   sdc-ide-web:
     image: bedasoftware/sdc-ide:master
@@ -29,44 +10,19 @@ services:
       BASE_URL: "https:\\/\\/aidbox.sdc.beda.software\\/"
 
   sdc-ide-web-healthcheck:
-    image: curlimages/curl
-    entrypoint: /bin/sleep 10000
-    links:
-      - sdc-ide-web
-    depends_on:
-      - sdc-ide-web
-    healthcheck:
-      test: curl --fail http://sdc-ide-web:5000 || exit 1
-      interval: 1s
-      timeout: 20s
-      retries: 100
+    extends:
+      file: ./compose/sdc-ide-web-healthcheck.yaml
+      service: sdc-ide-web-healthcheck
 
   sdc-ide-backend:
-    image: bedasoftware/aidbox-sdc:latest
-    depends_on:
-      sdc-ide-aidbox-healthcheck:
-        condition:
-          service_healthy
-    links:
-      - sdc-ide-aidbox
-    env_file:
-      - .env.sdc-ide
-    # Colored logs
-    tty: true
+    extends:
+      file: ./compose/sdc-ide-backend.yaml
+      service: sdc-ide-backend
 
   sdc-ide-aidbox:
-    image: healthsamurai/aidboxone:latest
-    depends_on:
-      - sdc-ide-aidbox-db
-    links:
-      - sdc-ide-aidbox-db:database
-    env_file:
-      - .env.sdc-ide
-    environment:
-      AIDBOX_LICENSE: ${SDC_IDE_AIDBOX_LICENSE}
-      AIDBOX_ADMIN_PASSWORD: ${SDC_IDE_AIDBOX_ADMIN_PASSWORD:-password}
-    volumes:
-      - ./config:/var/config:cached
+    extends:
+      file: ./compose/sdc-ide-aidbox.yaml
+      service: sdc-ide-aidbox
 
   sdc-ide-aidbox-db:
     # Update version
@@ -77,17 +33,9 @@ services:
       POSTGRES_DB:       ${POSTGRES_DB:-devbox}
 
   sdc-ide-aidbox-healthcheck:
-    image: curlimages/curl
-    entrypoint: /bin/sleep 10000
-    links:
-      - sdc-ide-aidbox
-    depends_on:
-      - sdc-ide-aidbox
-    healthcheck:
-      test: curl --fail http://sdc-ide-aidbox:8080/__healthcheck || exit 1
-      interval: 1s
-      timeout: 20s
-      retries: 100
+    extends:
+      file: ./compose/sdc-ide-aidbox-healthcheck.yaml
+      service: sdc-ide-aidbox-healthcheck
 
   fhir-emr-web:
     image: bedasoftware/fhir-emr:master
@@ -95,45 +43,19 @@ services:
       BASE_URL: "https:\\/\\/aidbox.fhir-emr.beda.software\\/"
 
   fhir-emr-web-healthcheck:
-    image: curlimages/curl
-    entrypoint: /bin/sleep 10000
-    links:
-      - fhir-emr-web
-    depends_on:
-      - fhir-emr-web
-    healthcheck:
-      test: curl --fail http://fhir-emr-web:5000 || exit 1
-      interval: 1s
-      timeout: 20s
-      retries: 100
+    extends:
+      file: ./compose/fhir-emr-web-healthcheck.yaml
+      service: fhir-emr-web-healthcheck
 
   fhir-emr-sdc:
-    image: bedasoftware/aidbox-sdc:latest
-    depends_on:
-      fhir-emr-aidbox-healthcheck:
-        condition:
-          service_healthy
-    links:
-      - fhir-emr-aidbox
-    env_file:
-      - .env.fhir-emr
-    # Colored logs
-    tty: true
+    extends:
+      file: ./compose/fhir-emr-sdc.yaml
+      service: fhir-emr-sdc
 
   fhir-emr-aidbox:
-    image: healthsamurai/aidboxone:latest
-    depends_on:
-      - fhir-emr-aidbox-db
-    links:
-      - fhir-emr-aidbox-db:database
-    env_file:
-      - .env.fhir-emr
-    environment:
-      AIDBOX_LICENSE: ${FHIR_EMR_AIDBOX_LICENSE}
-      AIDBOX_ADMIN_PASSWORD: ${FHIR_EMR_AIDBOX_ADMIN_PASSWORD:-password}
-    volumes:
-      - ./config:/var/config:cached
-      - /root/fhir-emr-master/zrc:/zrc
+    extends:
+      file: ./compose/fhir-emr-aidbox.yaml
+      service: fhir-emr-aidbox
 
   fhir-emr-aidbox-db:
     # Update version
@@ -144,26 +66,14 @@ services:
       POSTGRES_DB:       ${POSTGRES_DB:-devbox}
 
   fhir-emr-aidbox-healthcheck:
-    image: curlimages/curl
-    entrypoint: /bin/sleep 10000
-    links:
-      - fhir-emr-aidbox
-    depends_on:
-      - fhir-emr-aidbox
-    healthcheck:
-      test: curl --fail http://fhir-emr-aidbox:8080/__healthcheck || exit 1
-      interval: 1s
-      timeout: 20s
-      retries: 100
+    extends:
+      file: ./compose/fhir-emr-aidbox-healthcheck.yaml
+      service: fhir-emr-aidbox-healthcheck
 
   fhir-emr-scheduling:
-    image: bedasoftware/aidbox-scheduling-node-app
-    depends_on:
-      fhir-emr-aidbox-healthcheck:
-        condition: service_healthy
-    env_file:
-      - .env.fhir-emr
-      - .env.fhir-emr-scheduling
+    extends:
+      file: ./compose/fhir-emr-scheduling.yaml
+      service: fhir-emr-scheduling
 
   build-seeds:
     build:

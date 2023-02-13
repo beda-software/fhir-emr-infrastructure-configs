@@ -1,0 +1,14 @@
+services:
+  sdc-ide-aidbox:
+    image: healthsamurai/aidboxone:latest
+    depends_on:
+      - sdc-ide-aidbox-db
+    links:
+      - sdc-ide-aidbox-db:database
+    env_file:
+      - ../.env.sdc-ide
+    environment:
+      AIDBOX_LICENSE: ${SDC_IDE_AIDBOX_LICENSE}
+      AIDBOX_ADMIN_PASSWORD: ${SDC_IDE_AIDBOX_ADMIN_PASSWORD:-password}
+    volumes:
+      - ./config:/var/config:cached

@@ -1,0 +1,11 @@
+services:
+  sdc-ide-web-healthcheck:
+    extends:
+      file: ./healthchecker.yaml
+      service: healthchecker
+    links:
+      - sdc-ide-web
+    depends_on:
+      - sdc-ide-web
+    healthcheck:
+      test: curl --fail http://sdc-ide-web:5000 || exit 1

@@ -1,0 +1,24 @@
+services:
+  nginx:
+    image: jonasal/nginx-certbot
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ../nginx:/etc/nginx/user_conf.d:ro
+    - ../letsencrypt:/etc/letsencrypt
+    environment:
+      CERTBOT_EMAIL: ${CERTBOT_EMAIL}
+    depends_on:
+      sdc-ide-aidbox-healthcheck:
+        condition:
+          service_healthy
+      sdc-ide-web-healthcheck:
+        condition:
+          service_healthy
+      fhir-emr-aidbox-healthcheck:
+        condition:
+          service_healthy
+      fhir-emr-web-healthcheck:
+        condition:
+          service_healthy

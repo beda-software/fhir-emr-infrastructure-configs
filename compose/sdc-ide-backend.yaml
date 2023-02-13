@@ -1,0 +1,13 @@
+services:
+  sdc-ide-backend:
+    image: bedasoftware/aidbox-sdc:latest
+    depends_on:
+      sdc-ide-aidbox-healthcheck:
+        condition:
+          service_healthy
+    links:
+      - sdc-ide-aidbox
+    env_file:
+      - ../.env.sdc-ide
+    # Colored logs
+    tty: true
