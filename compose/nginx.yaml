@@ -9,6 +9,7 @@ services:
     - ../letsencrypt:/etc/letsencrypt
     environment:
       CERTBOT_EMAIL: ${CERTBOT_EMAIL}
+      STAGING: 1
     depends_on:
       sdc-ide-aidbox-healthcheck:
         condition:
