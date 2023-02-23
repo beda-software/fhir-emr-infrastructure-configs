@@ -1,0 +1,12 @@
+services:
+  fhir-datasequence-ingestion-api:
+    image: bedasoftware/fhir-datasequence:latest
+    depends_on:
+      fhir-datasequence-timescaledb:
+        condition: service_healthy
+      fhir-datasequence-ingestion-api-migrations:
+        condition: service_completed_successfully
+    environment:
+      TIMESCALEDB_SERVICE_NAME: fhir-datasequence-timescaledb
+      PGUSER: postgres
+      PGPASSWORD: ${TIMESCALEDB_POSTGRES_PASSWORD:-timescaledb-password}

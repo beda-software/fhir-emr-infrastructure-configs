@@ -75,6 +75,21 @@ services:
       file: ./compose/fhir-emr-scheduling.yaml
       service: fhir-emr-scheduling
 
+  fhir-datasequence-ingestion-api:
+    extends:
+      file: ./compose/fhir-datasequence-ingestion-api.yaml
+      service: fhir-datasequence-ingestion-api
+
+  fhir-datasequence-ingestion-api-migrations:
+    extends:
+      file: ./compose/fhir-datasequence-ingestion-api-migrations.yaml
+      service: fhir-datasequence-ingestion-api-migrations
+
+  fhir-datasequence-timescaledb:
+    extends:
+      file: ./compose/fhir-datasequence-timescaledb.yaml
+      service: fhir-datasequence-timescaledb
+
   build-seeds:
     build:
       context: /root/fhir-emr-master/.

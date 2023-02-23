@@ -23,3 +23,6 @@ services:
       fhir-emr-web-healthcheck:
         condition:
           service_healthy
+      fhir-datasequence-ingestion-api:
+        condition:
+          service_started
