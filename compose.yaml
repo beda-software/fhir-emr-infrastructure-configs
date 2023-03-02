@@ -40,7 +40,7 @@ services:
   fhir-emr-web:
     image: bedasoftware/fhir-emr:master
     environment:
-      BASE_URL: "https:\\/\\/aidbox.fhir-emr.beda.software\\/"
+      BASE_URL: "https:\\/\\/aidbox.emr.beda.software\\/"
 
   fhir-emr-web-healthcheck:
     extends:
