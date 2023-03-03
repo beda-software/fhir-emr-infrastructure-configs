@@ -15,7 +15,7 @@ jobs:
           host: ${{secrets.VIDEO_REMOTE_HOST}}
           username: ${{secrets.VIDEO_REMOTE_USER}}
           key: ${{secrets.VIDEO_SSH_PRIVATE_KEY}}
-          source: "jitsi/*,!jitsi/cfg-backup.bz2"
+          source: "jitsi/.env.jitsi,jitsi/Makefile,jitsi/compose.jitsi.yaml"
           target: "jitsi-meet"
           strip_components: 1
       - name: Generate .env and restart
@@ -35,7 +35,7 @@ jobs:
           script_stop: true
           script: |
             cd ~/jitsi-meet
-            mv .env.jitsi .env:
+            mv .env.jitsi .env
             mv compose.jitsi.yaml compose.yaml
             make restart
             echo Current branch is ${{ github.ref }}
