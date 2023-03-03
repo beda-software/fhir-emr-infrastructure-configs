@@ -15,7 +15,7 @@ jobs:
           host: ${{secrets.VIDEO_REMOTE_HOST}}
           username: ${{secrets.VIDEO_REMOTE_USER}}
           key: ${{secrets.VIDEO_SSH_PRIVATE_KEY}}
-          source: "jitsi/*,!/jitsi/cfg-backup.bz2"
+          source: "jitsi/*"
           target: "jitsi-meet-tmp"
       - name: Generate .env and restart
         uses: appleboy/ssh-action@v0.1.7
@@ -36,7 +36,7 @@ jobs:
             cp ~/jitsi-meet-tmp/jitsi/* ~/jitsi-meet
             cd ~/jitsi-meet
             mv compose.jitsi.yaml compose.yaml
-            mv .env.jitsi .env
+            mv env.jitsi .env
             make restart
             rm -rf ~/jitsi-meet-tmp
             echo Current branch is ${{ github.ref }}
