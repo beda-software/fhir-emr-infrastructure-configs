@@ -15,7 +15,7 @@ jobs:
           host: ${{secrets.VIDEO_REMOTE_HOST}}
           username: ${{secrets.VIDEO_REMOTE_USER}}
           key: ${{secrets.VIDEO_SSH_PRIVATE_KEY}}
-          source: "jitsi/*,!jitsi/cfg-backup.bz2"
+          source: "jitsi/.env.jitsi,jitsi/Makefile,jitsi/compose.jitsi.yaml"
           target: "jitsi-meet"
       - name: Generate .env and restart
         uses: appleboy/ssh-action@v0.1.7
