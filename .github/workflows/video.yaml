@@ -20,7 +20,6 @@ jobs:
       - name: Generate .env and restart
         uses: appleboy/ssh-action@v0.1.7
         env:
-          CONFIG: ${{secrets.VIDEO_CONFIG_PATH}}
           PUBLIC_URL: ${{secrets.VIDEO_PUBLIC_URL}}
           LETSENCRYPT_DOMAIN: ${{secrets.VIDEO_REMOTE_HOST}}
           LETSENCRYPT_EMAIL: ${{secrets.CERTBOT_EMAIL}}
@@ -30,7 +29,7 @@ jobs:
           host: ${{secrets.VIDEO_REMOTE_HOST}}
           username: ${{secrets.VIDEO_REMOTE_USER}}
           key: ${{secrets.VIDEO_SSH_PRIVATE_KEY}}
-          envs: CONFIG,PUBLIC_URL,LETSENCRYPT_DOMAIN,LETSENCRYPT_EMAIL,JICOFO_AUTH_PASSWORD,JVB_AUTH_PASSWORD
+          envs: PUBLIC_URL,LETSENCRYPT_DOMAIN,LETSENCRYPT_EMAIL,JICOFO_AUTH_PASSWORD,JVB_AUTH_PASSWORD
           script_stop: true
           script: |
             cp ~/jitsi-meet-tmp/jitsi/* ~/jitsi-meet
