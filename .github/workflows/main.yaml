@@ -1,4 +1,4 @@
-name: Deploy configs
+name: Deploy EMR and SDC-IDE configs
 on:
   push:
     branches:
@@ -12,10 +12,10 @@ jobs:
       - name: Copy file via ssh
         uses: appleboy/scp-action@master
         with:
-          host: ${{secrets.REMOTE_HOST}}
-          username: ${{secrets.REMOTE_USER}}
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          source: "*,!.github,!.gitignore"
+          host: ${{secrets.EMR_REMOTE_HOST}}
+          username: ${{secrets.EMR_REMOTE_USER}}
+          key: ${{secrets.EMR_SSH_PRIVATE_KEY}}
+          source: "*,!.github,!.gitignore,!jitsi"
           target: "web"
       - name: Generate .env and restart
         uses: appleboy/ssh-action@v0.1.7
@@ -24,9 +24,9 @@ jobs:
           FHIR_EMR_AIDBOX_LICENSE: ${{secrets.FHIR_EMR_AIDBOX_LICENSE}}
           CERTBOT_EMAIL: ${{secrets.CERTBOT_EMAIL}}
         with:
-          host: ${{secrets.REMOTE_HOST}}
-          username: ${{secrets.REMOTE_USER}}
-          key: ${{secrets.SSH_PRIVATE_KEY}}
+          host: ${{secrets.EMR_REMOTE_HOST}}
+          username: ${{secrets.EMR_REMOTE_USER}}
+          key: ${{secrets.EMR_SSH_PRIVATE_KEY}}
           envs: SDC_IDE_AIDBOX_LICENSE,FHIR_EMR_AIDBOX_LICENSE,CERTBOT_EMAIL
           script_stop: true
           script: |
