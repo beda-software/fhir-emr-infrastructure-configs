@@ -23,16 +23,22 @@ jobs:
           SDC_IDE_AIDBOX_LICENSE: ${{secrets.SDC_IDE_AIDBOX_LICENSE}}
           FHIR_EMR_AIDBOX_LICENSE: ${{secrets.FHIR_EMR_AIDBOX_LICENSE}}
           CERTBOT_EMAIL: ${{secrets.CERTBOT_EMAIL}}
+          AUTH_JWT_SECRET: ${{secrets.JITSI_JWT_APP_SECRET}}
+          AUTH_JWT_ACCEPTED_ISSUERS: ${{secrets.JITSI_JWT_ACCEPTED_ISSUERS}}
+          AUTH_JWT_ACCEPTED_AUDIENCES: ${{secrets.JITSI_JWT_ACCEPTED_AUDIENCE}}
         with:
           host: ${{secrets.EMR_REMOTE_HOST}}
           username: ${{secrets.EMR_REMOTE_USER}}
           key: ${{secrets.EMR_SSH_PRIVATE_KEY}}
-          envs: SDC_IDE_AIDBOX_LICENSE,FHIR_EMR_AIDBOX_LICENSE,CERTBOT_EMAIL
+          envs: SDC_IDE_AIDBOX_LICENSE,FHIR_EMR_AIDBOX_LICENSE,CERTBOT_EMAIL,AUTH_JWT_SECRET,AUTH_JWT_ACCEPTED_ISSUERS,AUTH_JWT_ACCEPTED_AUDIENCES
           script_stop: true
           script: |
             cd ~/web
             echo "SDC_IDE_AIDBOX_LICENSE=$SDC_IDE_AIDBOX_LICENSE" > .env
             echo "FHIR_EMR_AIDBOX_LICENSE=$FHIR_EMR_AIDBOX_LICENSE" >> .env
             echo "CERTBOT_EMAIL=$CERTBOT_EMAIL" >> .env
+            echo "AUTH_JWT_SECRET=$AUTH_JWT_SECRET" >> .env
+            echo "AUTH_JWT_ACCEPTED_ISSUERS=$AUTH_JWT_ACCEPTED_ISSUERS" >> .env
+            echo "AUTH_JWT_ACCEPTED_AUDIENCES=$AUTH_JWT_ACCEPTED_AUDIENCES" >> .env
             make restart
             echo Current branch is ${{ github.ref }}

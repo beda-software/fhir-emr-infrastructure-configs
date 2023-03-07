@@ -97,3 +97,7 @@ services:
     volumes:
       - /root/fhir-emr-master/zrc:/app/zrc
       - /root/fhir-emr-master/resources/seeds:/app/resources/seeds
+  jitsi-auth:
+    extends:
+      file: ./compose/jitsi-auth.yaml
+      service: jitsi-auth

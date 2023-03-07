@@ -25,17 +25,25 @@ jobs:
           LETSENCRYPT_EMAIL: ${{secrets.CERTBOT_EMAIL}}
           JICOFO_AUTH_PASSWORD: ${{secrets.JICOFO_AUTH_PASSWORD}}
           JVB_AUTH_PASSWORD: ${{secrets.JVB_AUTH_PASSWORD}}
+          JWT_APP_ID: ${{secrets.JITSI_JWT_APP_ID}}
+          JWT_APP_SECRET: ${{secrets.JITSI_JWT_APP_SECRET}}
+          JWT_ACCEPTED_ISSUERS: ${{secrets.JITSI_JWT_ACCEPTED_ISSUERS}}
+          JWT_ACCEPTED_AUDIENCES: ${{secrets.JITSI_JWT_ACCEPTED_AUDIENCE}}
         with:
           host: ${{secrets.VIDEO_REMOTE_HOST}}
           username: ${{secrets.VIDEO_REMOTE_USER}}
           key: ${{secrets.VIDEO_SSH_PRIVATE_KEY}}
-          envs: PUBLIC_URL,LETSENCRYPT_DOMAIN,LETSENCRYPT_EMAIL,JICOFO_AUTH_PASSWORD,JVB_AUTH_PASSWORD
+          envs: PUBLIC_URL,LETSENCRYPT_DOMAIN,LETSENCRYPT_EMAIL,JICOFO_AUTH_PASSWORD,JVB_AUTH_PASSWORD,JWT_APP_ID,JWT_APP_SECRET,JWT_ACCEPTED_ISSUERS,JWT_ACCEPTED_AUDIENCES
           script_stop: true
           script: |
             cp ~/jitsi-meet-tmp/jitsi/* ~/jitsi-meet
             cd ~/jitsi-meet
             mv compose.jitsi.yaml compose.yaml
             mv env.jitsi .env
+            echo "JWT_APP_ID=$JWT_APP_ID" >> .env
+            echo "JWT_APP_SECRET=$JWT_APP_SECRET" >> .env
+            echo "JWT_ACCEPTED_ISSUERS=$JWT_ACCEPTED_ISSUERS" >> .env
+            echo "JWT_ACCEPTED_AUDIENCES=$JWT_ACCEPTED_AUDIENCES" >> .env
             make restart
             rm -rf ~/jitsi-meet-tmp
             echo Current branch is ${{ github.ref }}
