@@ -6,7 +6,7 @@ services:
                 condition: service_healthy
         env_file:
             - ../.env.jitsi-auth
-            - ../.env.aidbox
+            - ../.env.fhir-emr
         environment:
             - AUTH_JWT_SECRET
             - AUTH_JWT_ACCEPTED_ISSUERS
